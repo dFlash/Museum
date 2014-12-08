@@ -1,16 +1,25 @@
 package com.onpu.museum;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements OnClickListener{
 
+	Button butGetData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		butGetData = (Button) findViewById(R.id.butGetData);
+		butGetData.setOnClickListener(this);
 	}
 
 	@Override
@@ -30,5 +39,17 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.butGetData:
+			Intent intent = new Intent(this, ServerResponse.class);
+		    startActivity(intent);
+			break;
+		}
+		
 	}
 }
