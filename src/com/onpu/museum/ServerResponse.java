@@ -22,18 +22,23 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ServerResponse extends Activity {
+public class ServerResponse extends Activity implements OnClickListener{
 
 	
+//	Button nextElem;
+//	TextView catDesc, catName, elemName;
+
+	TextView catDesc;
 	Button nextElem;
-	TextView catDesc, catName, elemName;
-	
 	ArrayList<Entity> responseList;
-	 
+	int ii=0;
+	
 	
 
 	@Override
@@ -42,24 +47,33 @@ public class ServerResponse extends Activity {
 	    setContentView(R.layout.server_response);
 	    
 	    
-	    nextElem = (Button) findViewById(R.id.butNextElem);
-	    catDesc  = (TextView) findViewById(R.id.tvCatDesc);
-	    catName  = (TextView) findViewById(R.id.tvCatName);
-	    elemName = (TextView) findViewById(R.id.tvElemDesc);
+	    
 	    
 	   
-	    
-	    responseList = new ArrayList<>();
 
-	    getResponse();
-		//new DDD().execute();
+	    nextElem = (Button) findViewById(R.id.butNextElem);
+	    nextElem.setOnClickListener(this);
+		catDesc  = (TextView) findViewById(R.id.tvCatDesc);
+		TextView catName  = (TextView) findViewById(R.id.tvCatName);
+		TextView elemName = (TextView) findViewById(R.id.tvElemDesc);
+		try {
+			responseList = new DDD().execute().get();
+			catDesc.setText(responseList.get(1).getDesc());
+		} catch (InterruptedException | ExecutionException e) {
+			Log.i("222222", "123124235");
+		}
 	    
 //	    
 
 	    	    
 	}
 
-	private void getResponse() {
+	
+	
+	public ArrayList<Entity> getResponse() {
+		
+
+		ArrayList<Entity> responseList = new ArrayList<>();
 
 		HttpClient client = new DefaultHttpClient();
 
@@ -69,11 +83,14 @@ public class ServerResponse extends Activity {
 		HttpResponse response;
 
 		
+		Log.i("07777777777777777", "BBBBBBBBBBB");
 
 		try {
 			// получение ответа и парсинг его
 			response = client.execute(request);
 
+			
+			Log.i("0999999999", "AAAAAAAAA");
 			
 			HttpEntity entity = response.getEntity();
 
@@ -114,10 +131,12 @@ public class ServerResponse extends Activity {
 							}
 						}
 
+						
 						responseList.add(new Entity(name, desc, header,
 								type));
 					}
 
+					
 				}
 				
 				Toast.makeText(getApplicationContext(), "≈сть соединение", Toast.LENGTH_LONG);
@@ -141,18 +160,31 @@ public class ServerResponse extends Activity {
 			Log.i("ALLAH AKBAR ", eee.toString());
 		}
 		
+		return responseList;
+		
 	}
 	
 	
-//	private class DDD extends AsyncTask {
-//
+	private class DDD extends AsyncTask<Void,Void,ArrayList<Entity>> {
+		
+		//int ii=0;
+		ArrayList<Entity> list;
+		
+		@Override
+		protected ArrayList<Entity> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			list=getResponse();
+			return list;
+		}
+		
 //		@Override
-//		protected Object doInBackground(Object... params) {
-//			getResponse();
-//			return null;
-//		}
-//
-//	}
+//		protected void onPostExecute(ArrayList<Entity> result) {
+//            catDesc.setText(result.get(ii).getDesc());
+//       }
+		
+
+
+	}
 	
 	
 	private class Entity {
@@ -249,5 +281,21 @@ public class ServerResponse extends Activity {
 		
 		
 	}
+
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.butNextElem:
+			Toast.makeText(getApplicationContext(), "SSSS", Toast.LENGTH_LONG)
+					.show();
+			catDesc.setText(responseList.get(0).getDesc());
+			break;
+		}
+		
+	}
+
+
+
 
 }
