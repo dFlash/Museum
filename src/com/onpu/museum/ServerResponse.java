@@ -69,13 +69,9 @@ public class ServerResponse extends Activity implements OnClickListener{
 
 		HttpResponse response;
 
-		// Log.i("07777777777777777", "BBBBBBBBBBB");
-
 		try {
 			// получение ответа и парсинг его
 			response = client.execute(request);
-
-			// Log.i("0999999999", "AAAAAAAAA");
 
 			HttpEntity entity = response.getEntity();
 

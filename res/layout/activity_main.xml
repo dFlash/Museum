@@ -17,4 +17,13 @@
         android:layout_marginBottom="57dp"
         android:text="Get data from server" />
 
+    <Button
+        android:id="@+id/butCheckConn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/butGetData"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="Check server connection" />
+
 </RelativeLayout>
