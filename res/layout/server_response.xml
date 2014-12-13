@@ -9,15 +9,6 @@
     tools:context="com.onpu.museum.MainActivity" >
 
     <Button
-        android:id="@+id/butNextCat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
-        android:text="Next category" />
-
-    <Button
         android:id="@+id/butNextElem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,18 +29,10 @@
         android:id="@+id/tvElemDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/tvCatDesc"
+        android:layout_below="@+id/tvCatDesc"
+        android:layout_marginTop="54dp"
         android:text="No element" />
-
-    <TextView
-        android:id="@+id/tvElemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvElemDesc"
-        android:layout_below="@+id/tvElemDesc"
-        android:layout_marginTop="34dp"
-        android:text="No element description" />
 
     <TextView
         android:id="@+id/tvCatDesc"
@@ -57,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvCatName"
         android:layout_below="@+id/tvCatName"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="43dp"
         android:text="No category description" />
 
 </RelativeLayout>
