@@ -26,21 +26,30 @@
         android:text="No category" />
 
     <TextView
-        android:id="@+id/tvElemDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvCatDesc"
-        android:layout_below="@+id/tvCatDesc"
-        android:layout_marginTop="54dp"
-        android:text="No element" />
-
-    <TextView
         android:id="@+id/tvCatDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvCatName"
         android:layout_below="@+id/tvCatName"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="28dp"
         android:text="No category description" />
+
+    <TextView
+        android:id="@+id/tvElemDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvCatDesc"
+        android:layout_below="@+id/tvCatDesc"
+        android:layout_marginTop="29dp"
+        android:text="No element" />
+
+    <ImageView
+        android:id="@+id/imgElem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvElemDesc"
+        android:layout_below="@+id/tvElemDesc"
+        android:layout_marginTop="27dp"
+        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
 
 </RelativeLayout>

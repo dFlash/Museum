@@ -1,6 +1,7 @@
 package com.onpu.museum;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -19,12 +20,15 @@ import org.json.simple.parser.ParseException;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +36,7 @@ public class ServerResponse extends Activity implements OnClickListener{
 
 	TextView catDesc,catName,elemName;
 	Button nextElem;
+	ImageView imageView;
 	ArrayList<Entity> responseList;
 	int ii=0;
 	
@@ -45,11 +50,13 @@ public class ServerResponse extends Activity implements OnClickListener{
 		catDesc = (TextView) findViewById(R.id.tvCatDesc);
 		catName = (TextView) findViewById(R.id.tvCatName);
 		elemName = (TextView) findViewById(R.id.tvElemDesc);
+		imageView = (ImageView) findViewById(R.id.imgElem);
 		try {
 			responseList = new ResponseTask().execute().get();
 			catDesc.setText(responseList.get(ii).getDesc());
 			catName.setText(responseList.get(ii).getName());
 			elemName.setText(responseList.get(ii).getHeader());
+			imageView.setImageBitmap(responseList.get(ii).getImage());
 		} catch (InterruptedException | ExecutionException e) {
 			Log.e("App exception", e.toString());
 		}
@@ -92,6 +99,7 @@ public class ServerResponse extends Activity implements OnClickListener{
 				String desc = "";
 				String header = "";
 				String type = "";
+				String src = "";
 
 				if (resultObject instanceof JSONArray) {
 					JSONArray array = (JSONArray) resultObject;
@@ -106,10 +114,23 @@ public class ServerResponse extends Activity implements OnClickListener{
 							for (Object ob : arrayO) {
 								JSONObject obj2 = (JSONObject) ob;
 								header += obj2.get("header");
+								src = (String) obj2.get("src");
 							}
 						}
+						
+						Bitmap image = null;
+						if (src.endsWith("JPG") || src.endsWith("jpg")) {
+							URL url = new URL(
+									getResources().getString(R.string.server_url)+src);
+							 image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+						}
+						else {
+							image = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+						}
+						
+						Bitmap scaledImg = Bitmap.createScaledBitmap(image, 100, 100, false);
 
-						responseList.add(new Entity(name, desc, header, type));
+						responseList.add(new Entity(name, desc, header, type,scaledImg));
 					}
 
 				}
@@ -147,12 +168,14 @@ public class ServerResponse extends Activity implements OnClickListener{
 		String desc;
 		String header;
 		String type;
+		Bitmap image;
 
-		public Entity(String name, String desc, String header, String type) {
+		public Entity(String name, String desc, String header, String type, Bitmap image) {
 			this.desc = desc;
 			this.name = name;
 			this.header = header;
 			this.type = type;
+			this.image = image;
 		}
 
 		public String getName() {
@@ -165,6 +188,10 @@ public class ServerResponse extends Activity implements OnClickListener{
 
 		public String getHeader() {
 			return header;
+		}
+		
+		public Bitmap getImage() {
+			return image;
 		}
 
 		public String getType() {
@@ -250,6 +277,7 @@ public class ServerResponse extends Activity implements OnClickListener{
 			catDesc.setText(responseList.get(ii).getDesc());
 			catName.setText(responseList.get(ii).getName());
 			elemName.setText(responseList.get(ii).getHeader());
+			imageView.setImageBitmap(responseList.get(ii).getImage());
 			break;
 		}
 
