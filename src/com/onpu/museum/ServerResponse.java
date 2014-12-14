@@ -46,7 +46,7 @@ public class ServerResponse extends Activity implements OnClickListener{
 		catName = (TextView) findViewById(R.id.tvCatName);
 		elemName = (TextView) findViewById(R.id.tvElemDesc);
 		try {
-			responseList = new DDD().execute().get();
+			responseList = new ResponseTask().execute().get();
 			catDesc.setText(responseList.get(ii).getDesc());
 			catName.setText(responseList.get(ii).getName());
 			elemName.setText(responseList.get(ii).getHeader());
@@ -129,7 +129,7 @@ public class ServerResponse extends Activity implements OnClickListener{
 	}
 	
 	
-	private class DDD extends AsyncTask<Void, Void, ArrayList<Entity>> {
+	private class ResponseTask extends AsyncTask<Void, Void, ArrayList<Entity>> {
 
 		ArrayList<Entity> list;
 

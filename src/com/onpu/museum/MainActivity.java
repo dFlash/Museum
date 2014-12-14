@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener{
 
-	Button butGetData;
+	Button butGetData, butCheckConnection;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +20,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 		
 		butGetData = (Button) findViewById(R.id.butGetData);
 		butGetData.setOnClickListener(this);
+		
+		butCheckConnection = (Button) findViewById(R.id.butCheckConn);
+		butCheckConnection.setOnClickListener(this);
+		
 	}
 
 	@Override
@@ -49,6 +53,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 			Intent intent = new Intent(this, ServerResponse.class);
 		    startActivity(intent);
 			break;
+			
+		case R.id.butCheckConn:
+			Intent intentCkeckConn = new Intent(this, CheckConnection.class);
+		    startActivity(intentCkeckConn);
+		    break;
 		}
 		
 	}
